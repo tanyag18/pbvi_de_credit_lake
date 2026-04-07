@@ -15,7 +15,7 @@
 | S1.T1 | Environment Verification | ✅ COMPLETE | pending |
 | S1.T2 | dbt Project Configuration | ✅ COMPLETE | pending |
 | S1.T3 | Pipeline Utilities — Paths and Run ID | ✅ COMPLETE | pending |
-| S1.T4 | Pipeline Utilities — Watermark and Run Log | NOT STARTED | |
+| S1.T4 | Pipeline Utilities — Watermark and Run Log | ✅ COMPLETE | pending |
 | S1.T5 | Bronze Loader — Transaction Codes | NOT STARTED | |
 
 ---
@@ -25,6 +25,7 @@
 | Task | Decision Made | Rationale |
 |---|---|---|
 | S1.T1 | Use `python` instead of `python3` | `python3` not available on Windows; `python` points to 3.12.7 |
+| S1.T4 | Use `Path.replace()` for atomic writes | Windows `Path.rename()` fails if target exists; `replace()` is cross-platform |
 
 ---
 
