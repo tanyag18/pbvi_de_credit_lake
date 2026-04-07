@@ -3,4 +3,4 @@ transactions_lake:
   outputs:
     dev:
       type: duckdb
-      path: /app/data/pipeline/dbt.duckdb
+      path: data/pipeline/dbt.duckdb
