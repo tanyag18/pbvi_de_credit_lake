@@ -209,17 +209,17 @@ Used Path.replace() instead of Path.rename() for atomic writes — Windows does 
 
 | Case | Scenario | Expected | Result |
 |---|---|---|---|
-| T5.1 | First run — load transaction_codes.csv | SUCCESS, 4 rows written | |
-| T5.2 | Second run — partition exists | SKIPPED, no overwrite | |
-| T5.3 | Audit columns on written records | All non-null (_source_file, _ingested_at, _pipeline_run_id) | |
+| T5.1 | First run — load transaction_codes.csv | SUCCESS, 4 rows written | ✅ PASS — SUCCESS, 4 rows |
+| T5.2 | Second run — partition exists | SKIPPED, no overwrite | ✅ PASS — SKIPPED, 0 rows |
+| T5.3 | Audit columns on written records | All non-null (_source_file, _ingested_at, _pipeline_run_id) | ✅ PASS — all non-null across 4 rows |
 
 **INVARIANT TOUCH: INV-02 (Source-to-Bronze Completeness), INV-17 (Bronze Immutability), INV-19 (Source File Read-Only)**
 
 ### Prediction Statement
 
-- T5.1: [ENGINEER: predicted output]
-- T5.2: [ENGINEER: predicted output]
-- T5.3: [ENGINEER: predicted output]
+- T5.1: SUCCESS, 4 rows written to data/bronze/transaction_codes/data.parquet
+- T5.2: SKIPPED, 0 rows — file already exists, no overwrite
+- T5.3: All 4 rows have non-null _source_file, _ingested_at, _pipeline_run_id
 
 ### CD Challenge Output
 
@@ -230,19 +230,19 @@ Used Path.replace() instead of Path.rename() for atomic writes — Windows does 
 **Required — invariant-touching task.**
 
 INV-02 review checklist:
-- [ ] Row count assertion: rows_written == rows_in_source (excluding header)
-- [ ] No rows filtered, deduplicated, or modified during Bronze ingestion
-- [ ] Only additions are audit columns (_source_file, _ingested_at, _pipeline_run_id)
+- [x] Row count assertion: rows_written == rows_in_source (excluding header)
+- [x] No rows filtered, deduplicated, or modified during Bronze ingestion
+- [x] Only additions are audit columns (_source_file, _ingested_at, _pipeline_run_id)
 
 INV-17 review checklist:
-- [ ] Existence check before write — if partition file exists, skip entirely
-- [ ] No code path overwrites, modifies, or deletes an existing Bronze partition
-- [ ] Atomic write pattern: write to .tmp then rename
+- [x] Existence check before write — if partition file exists, skip entirely
+- [x] No code path overwrites, modifies, or deletes an existing Bronze partition
+- [x] Atomic write pattern: write to .tmp then replace
 
 INV-19 review checklist:
-- [ ] Source file opened in read-only mode
-- [ ] No write, move, rename, or delete operations on source/ directory
-- [ ] Data flow is one-directional: source/ → data/bronze/
+- [x] Source file opened in read-only mode
+- [x] No write, move, rename, or delete operations on source/ directory
+- [x] Data flow is one-directional: source/ → data/bronze/
 
 ### Test Cases Added During Session
 
@@ -252,17 +252,17 @@ INV-19 review checklist:
 
 ### Scope Decisions
 
-[Record any scope decisions made during this task. If CC encountered something not in Claude.md, record the decision and rationale here.]
+No scope decisions needed. Loader follows Claude.md §6.2 paths and §6.11 header spec exactly.
 
 ### Verification Verdict
 
-- [ ] All test cases pass
-- [ ] No invariant violations
-- [ ] No scope expansion
-- [ ] Output matches prediction
+- [x] All test cases pass
+- [x] No invariant violations
+- [x] No scope expansion
+- [x] Output matches prediction
 
-**Status:** In Progress
-**Engineer sign-off:**
+**Status:** ✅ COMPLETE
+**Engineer sign-off:** Tanya — 2026-04-07
 
 ---
 
