@@ -103,17 +103,17 @@ Updated profiles.yml path from Docker path (/app/data/pipeline/dbt.duckdb) to re
 
 | Case | Scenario | Expected | Result |
 |---|---|---|---|
-| T3.1 | Import paths | No error | |
-| T3.2 | bronze_transactions_path("2024-01-01") | Correct path string | |
-| T3.3 | generate_run_id() | UUID4 string | |
+| T3.1 | Import paths | No error | ✅ PASS — imports succeed |
+| T3.2 | bronze_transactions_path("2024-01-01") | Correct path string | ✅ PASS — data/bronze/transactions/date=2024-01-01/data.parquet |
+| T3.3 | generate_run_id() | UUID4 string | ✅ PASS — valid UUID4 returned |
 
 **Invariant Touch:** None.
 
 ### Prediction Statement
 
-- T3.1: [ENGINEER: predicted output]
-- T3.2: [ENGINEER: predicted output]
-- T3.3: [ENGINEER: predicted output]
+- T3.1: No error on import
+- T3.2: {BASE_DIR}/data/bronze/transactions/date=2024-01-01/data.parquet
+- T3.3: Valid UUID4 string (e.g. xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx)
 
 ### CD Challenge Output
 
@@ -131,17 +131,17 @@ N/A — no invariant-touching task.
 
 ### Scope Decisions
 
-[Record any scope decisions made during this task. If CC encountered something not in Claude.md, record the decision and rationale here.]
+No scope decisions needed. All paths match Claude.md §6.2 specifications exactly.
 
 ### Verification Verdict
 
-- [ ] All test cases pass
-- [ ] No invariant violations
-- [ ] No scope expansion
-- [ ] Output matches prediction
+- [x] All test cases pass
+- [x] No invariant violations
+- [x] No scope expansion
+- [x] Output matches prediction
 
-**Status:** In Progress
-**Engineer sign-off:**
+**Status:** ✅ COMPLETE
+**Engineer sign-off:** Tanya — 2026-04-07
 
 ---
 

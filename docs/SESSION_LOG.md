@@ -14,7 +14,7 @@
 |---|---|---|---|
 | S1.T1 | Environment Verification | ✅ COMPLETE | pending |
 | S1.T2 | dbt Project Configuration | ✅ COMPLETE | pending |
-| S1.T3 | Pipeline Utilities — Paths and Run ID | NOT STARTED | |
+| S1.T3 | Pipeline Utilities — Paths and Run ID | ✅ COMPLETE | pending |
 | S1.T4 | Pipeline Utilities — Watermark and Run Log | NOT STARTED | |
 | S1.T5 | Bronze Loader — Transaction Codes | NOT STARTED | |
 
